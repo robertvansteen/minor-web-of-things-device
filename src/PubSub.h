@@ -29,6 +29,7 @@ class PubSub
     static PubSub* _instance;
     void ping();
     void registerDevice();
+    String getTopic(String topic);
     const char* _name;
     long lastReconnectAttempt;
     long lastPing;

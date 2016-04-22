@@ -54,13 +54,10 @@ void PubSub::addInputManager(InputManager* manager)
 /**
  * Get the topic by appending the local topic with the namespace of the device.
  */
-char* getTopic(String topic)
+String PubSub::getTopic(String topic)
 {
-  char buffer[128];
   topic = String(ENV_DEVICE_NAME + "/" + topic);
-  topic.toCharArray(buffer, 128);
-
-  return buffer;
+  return topic;
 }
 
 void PubSub::loop()
@@ -102,30 +99,34 @@ void PubSub::ping()
 
 void PubSub::publish(String topic)
 {
-  char* str = getTopic(topic);
-  _client.publish(str, "");
+  String str = getTopic(topic);
+  _client.publish(str.c_str(), "");
 }
 
 void PubSub::publish(String topic, JsonObject& payload)
 {
-  char* str = getTopic(topic);
+  String str = getTopic(topic);
   char buffer[1024];
   payload.printTo(buffer, sizeof(buffer));
-  _client.publish(str, buffer);
+  Serial.print("Publishing new message to: ");
+  Serial.println(str);
+  _client.publish(str.c_str(), buffer);
 }
 
 void PubSub::publish(String topic, JsonArray& payload)
 {
-  char* str = getTopic(topic);
+  String str = getTopic(topic);
   char buffer[1024];
   payload.printTo(buffer, sizeof(buffer));
-  _client.publish(str, buffer);
+  Serial.print("Publishing new message to: ");
+  Serial.println(str);
+  _client.publish(str.c_str(), buffer);
 }
 
 void PubSub::subscribe(String topic)
 {
-  char* str = getTopic(topic);
-  _client.subscribe(str);
+  String str = getTopic(topic);
+  _client.subscribe(str.c_str());
 }
 
 void PubSub::callback(char* topic, byte* payload, unsigned int length) {
