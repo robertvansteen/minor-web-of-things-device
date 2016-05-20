@@ -11,6 +11,7 @@ public:
   Strip(String id, String label, char* type);
   void callback(char* topic, JsonObject& payload);
 protected:
+  int disabled = 0;
   void update(int r, int g, int b);
   void rainbow(int wait);
   int wheel(byte position);

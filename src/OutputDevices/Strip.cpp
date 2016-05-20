@@ -8,6 +8,8 @@ Strip::Strip(String id, String label, char* type) : Output(id, label, type) {
 }
 
 void Strip::callback(char* topic, JsonObject& payload) {
+  this->disabled = payload["disabled"];
+
   int r = payload["r"];
   int g = payload["g"];
   int b = payload["b"];
@@ -17,6 +19,10 @@ void Strip::callback(char* topic, JsonObject& payload) {
 
 void Strip::update(int r, int g, int b)
 {
+  if (this->disabled == 1) {
+    return;
+  }
+
   for(int i=0; i<lib.numPixels(); i++) {
       int color = lib.Color(r, g, b);
       lib.setPixelColor(i, color);

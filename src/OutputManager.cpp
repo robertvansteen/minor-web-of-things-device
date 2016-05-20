@@ -4,7 +4,7 @@
 #include "OutputManager.h"
 
 Light light(String("LED"), String("Build-in LED"), "switch");
-Strip strip(String("strip"), String("Addressable color strip"), "strip");
+Strip strip(String("strip"), String("Temperature color"), "switch");
 
 OutputManager::OutputManager()
 {
