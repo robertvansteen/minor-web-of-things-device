@@ -1,6 +1,6 @@
 #include "Temp.h"
 
-DHT dht(D2, DHT11);
+DHT dht(D2, DHT22);
 
 Temp::Temp(String id, String label, char* type)
 : Input(id, label, type)

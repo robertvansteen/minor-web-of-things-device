@@ -20,8 +20,8 @@ void Strip::update(int r, int g, int b)
   for(int i=0; i<lib.numPixels(); i++) {
       int color = lib.Color(r, g, b);
       lib.setPixelColor(i, color);
-      lib.show();
   }
+  lib.show();
 }
 
 void Strip::rainbow(int wait) {

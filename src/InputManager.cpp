@@ -1,7 +1,8 @@
 #include "InputManager.h"
 
 LDR ldr(String("LDR"), String("Light sensor"), "light");
-Temp temp(String("temp"), String("Temperature sensor"), "temp");
+Temp temp(String("temp"), String("Temperature sensor"), "chart");
+Sound sound(String("sound"), String("Sound sensor"), "chart");
 
 InputManager::InputManager()
 {
@@ -12,6 +13,7 @@ void InputManager::connect()
 {
   add(&temp);
   // add(&ldr);
+  // add(&sound);
 
   StaticJsonBuffer<1024> jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();

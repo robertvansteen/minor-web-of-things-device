@@ -9,6 +9,7 @@
 #include "Input.h"
 #include "InputDevices/LDR.h"
 #include "InputDevices/Temp.h"
+#include "InputDevices/Sound.h"
 
 class InputManager
 {

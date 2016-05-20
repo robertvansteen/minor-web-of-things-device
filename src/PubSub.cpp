@@ -83,6 +83,7 @@ void PubSub::registerDevice()
   StaticJsonBuffer<1024> jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();
   root["name"] = ENV_DEVICE_NAME;
+  root["label"] = ENV_DEVICE_LABEL;
 
   publish(String("register"), root);
   lastPing = millis();
