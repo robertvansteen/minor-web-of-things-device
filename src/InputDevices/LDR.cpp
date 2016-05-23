@@ -13,7 +13,7 @@ boolean LDR::loop() {
   StaticJsonBuffer<1024> jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();
   root["value"] = analogRead(A0);
-  // publish(root);
+  publish(root);
 
   lastReading = millis();
 }

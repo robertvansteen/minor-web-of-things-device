@@ -12,7 +12,6 @@ boolean Sound::loop() {
   }
 
   int reading = analogRead(A0);
-  // int reading = Serial.read();
   array.push_back(reading);
 
   lastReading = now;
