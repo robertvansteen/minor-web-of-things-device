@@ -14,6 +14,9 @@ PubSub* PubSub::Instance()
   return _instance;
 }
 
+/**
+ * Constructor.
+ */
 PubSub::PubSub(const char* host, const int port) :
   _client(PubSubClient()),
   _wifi(WiFiClient())
@@ -25,6 +28,9 @@ PubSub::PubSub(const char* host, const int port) :
   });
 }
 
+/**
+ * Connect with the MQTT server.
+ */
 boolean PubSub::connect() {
   Serial.print("Connecting to PubSub server..");
   while (!_client.connected()) {
@@ -41,11 +47,17 @@ boolean PubSub::connect() {
   return _client.connected();
 }
 
+/**
+ * Set output manager.
+ */
 void PubSub::addOutputManager(OutputManager* manager)
 {
   outputManager = manager;
 }
 
+/**
+ * Set input manager.
+ */
 void PubSub::addInputManager(InputManager* manager)
 {
   inputManager = manager;
@@ -60,6 +72,11 @@ String PubSub::getTopic(String topic)
   return topic;
 }
 
+/**
+ * Loop, keep the MQTT connection alive.
+ * Reconnect if necessary.
+ * Call the loop method on the input manager.
+ */
 void PubSub::loop()
 {
   if (!_client.connected()) {
@@ -78,6 +95,9 @@ void PubSub::loop()
   }
 }
 
+/**
+ * Register a device.
+ */
 void PubSub::registerDevice()
 {
   StaticJsonBuffer<1024> jsonBuffer;
@@ -89,6 +109,9 @@ void PubSub::registerDevice()
   lastPing = millis();
 }
 
+/**
+ * Ping the server to know we are still alive.
+ */
 void PubSub::ping()
 {
   long now = millis();
@@ -98,12 +121,18 @@ void PubSub::ping()
   }
 }
 
+/**
+ * Publish something on a topic without a message.
+ */
 void PubSub::publish(String topic)
 {
   String str = getTopic(topic);
   _client.publish(str.c_str(), "");
 }
 
+/**
+ * Publish something on a topic, with JsonObject as message.
+ */
 void PubSub::publish(String topic, JsonObject& payload)
 {
   String str = getTopic(topic);
@@ -114,6 +143,9 @@ void PubSub::publish(String topic, JsonObject& payload)
   _client.publish(str.c_str(), buffer);
 }
 
+/**
+ * Publish something on a topic, with JsonArray as message.
+ */
 void PubSub::publish(String topic, JsonArray& payload)
 {
   String str = getTopic(topic);
@@ -124,12 +156,19 @@ void PubSub::publish(String topic, JsonArray& payload)
   _client.publish(str.c_str(), buffer);
 }
 
+/**
+ * Subscribe on a topic.
+ * Device ID will be automatically prepended.
+ */
 void PubSub::subscribe(String topic)
 {
   String str = getTopic(topic);
   _client.subscribe(str.c_str());
 }
 
+/**
+ * Callback, this function is called when a message is received by the device.
+ */
 void PubSub::callback(char* topic, byte* payload, unsigned int length) {
   char data[80];
 
